@@ -1,0 +1,13 @@
+<?php
+	define("HOST",'162.243.208.59');
+	define("DB",'verifbck_db');
+	define("USER",'verifbck_db');
+	define("PASS",'dBXcl~123');
+	define("SITE_URL",'162.243.208.59');
+	define("SURL",'https://backgroundcheck365.com/dashboard/');
+	define("SITENM",'BackgroundCheck365');
+	define("DEMAIL",'noreply@backgroundCheck365.com');
+	define("PORTAL",'BackgroundCheck365 Verification System');
+	define("SITE_ROOT",'home/verifbck/public_html/dashboard/');
+	$BCPV=3.3;
+?>

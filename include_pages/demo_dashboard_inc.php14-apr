@@ -1,0 +1,1002 @@
+<?php
+
+	$mnth = (isset($_REQUEST['mnth']))?$_REQUEST['mnth']:date("m");
+	$yr = (isset($_REQUEST['yr']))?$_REQUEST['yr']:date("Y");
+	$monthNum  = $mnth;
+	$Fmonth = date('F', mktime(0, 0, 0, $monthNum, 10));
+	$company_id = ($LEVEL!=4)?(isset($_REQUEST['client_id']))?$_REQUEST['client_id']:1:$COMINF['id'];
+	$comWhere = ($LEVEL!=4)?" AND com_id=$company_id ":"";
+
+?>
+
+<style>
+/*.sidebar {background-color: #333;}
+.navigation>li.active>a, .navigation>li.active>a:hover, .navigation>li.active>a:focus {
+    background-color: #C31E24;
+    color: #fff;
+}
+.panel{border-radius:0;}
+.media-left{display: inline-block;}
+.bgc-gray{background-color: #fbfbfb !important;}
+.bgc-pink{background-color: #fff7f8 !important;}
+.bgc-blue{background-color: #eef7fa !important;}
+.case_activity{background: #fff;}
+.credit_chrt .chart div{width:100% !important;}
+.credit_chrt .chart canvas{width:100% !important;}
+.credit_chrt .chart div.echarts-tooltip{width:auto !important;}
+.has-fixed-height{height:360px !important;}*/
+
+.credit_chrt .chart div{width:100% !important;}
+.credit_chrt .chart canvas{width:100% !important;}
+.credit_chrt .chart div.echarts-tooltip{width:auto !important;}
+.has-fixed-height{height:360px !important;}
+.column-panel-sortable .media-left{float:none; display:inline-block;}
+.text-success-600{color:#66ce39 !important;}
+/*.column-panel-sortable .panel{background:#2a2a2a;border-color: #2a2a2a; color:#fff;}
+.column-panel-sortable .panel-white>.panel-heading{background-color: #272727;border-bottom-color: #272727;}
+.column-panel-sortable .btn-default{background: #888;border-color: #888;color: #fff;}
+.column-panel-sortable .panel-flat>.panel-heading{background-color: #272727;border-bottom-color: #272727;}
+.table>thead>tr>td.active, .table>tbody>tr>td.active, .table>tfoot>tr>td.active, .table>thead>tr>th.active, .table>tbody>tr>th.active, .table>tfoot>tr>
+th.active, .table>thead>tr.active>td, .table>tbody>tr.active>td, .table>tfoot>tr.active>td, .table>thead>tr.active>th, .table>tbody>tr.active>th, .table>tfoot>tr.active>th{background-color: #333;}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{border-top:1px solid #444}*/
+.text-danger, .text-danger:hover, .text-danger:focus {color: #f23c25 !important;}
+.column-panel-sortable li{padding-right:0;}
+</style>
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+		
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				<!-- Content area -->
+				<div class="content">
+                
+                <?php include("include_pages/top_count_boxes_dash.php");?>
+                    
+                  <!--  <div class="row">                    	
+                    
+                    <div class="col-md-3 column-panel-sortable">
+                            	<div class="panel panel-white bgc-gray">
+                                   
+								<div class="panel-body text-center" style="padding: 0;
+    padding-top: 47px;
+    padding-bottom: 25px;">
+									
+													<div class="media-left no-padding">
+														<h1 class="no-margin"><i class="icon-circle-down2" style="font-size: 73px;line-height: 85px; color:#f23c25;"></i></h1>
+													</div>
+
+													<div class="media-left no-padding">
+														
+														<ul class="list-inline-condensed no-margin text-left" style="list-style:none;padding-left: 10px;padding-top: 9px;">
+														<li> <h5 class="no-margin" style="font-size: 34px;line-height: 25px;"><small class="text-success-600 text-size-base" style="width:100%; float:left;"><i style="font-size: 21px;font-style: normal;color:#f23c25;">55%</i></small>197</h5> </li>
+															<li>
+																<span class="text-muted">Action Pending by<br>Applicants</span>
+															</li>
+														</ul>
+													</div>
+
+												
+
+								</div>
+									<div class="bgc-gray panel-heading" style="border-top: 1px solid #272727;">
+									<h5 class="panel-title"><i class="icon-user position-left"></i> Send Reminder</h5>
+									<div class="heading-elements">
+										<span class="heading-text no-margin"><button class="btn btn-xs btn-default">View Detail</button></span>
+				                	</div>
+                                
+                                
+                                </div>
+
+                            </div>
+   
+                    </div>
+                    
+                    
+                    <div class="col-md-3 column-panel-sortable">
+                            	<div class="panel panel-white bgc-gray">
+                                   
+								<div class="panel-body text-center" style="padding: 0;
+    padding-top: 47px;
+    padding-bottom: 7px;">
+									
+													<div class="media-left no-padding">
+														<h1 class="no-margin"><i class="icon-circle-up2 text-success-600" style="font-size: 73px;line-height: 85px;"></i></h1>
+													</div>
+
+													<div class="media-left no-padding">
+														
+														<ul class="list-inline-condensed no-margin text-left" style="list-style:none;padding-left: 10px;padding-top: 9px;">
+														<li> <h5 class="no-margin" style="font-size: 34px;line-height: 25px;"><small class="text-success-600 text-size-base" style="width:100%; float:left;"><i style="font-size: 21px;font-style: normal;">55%</i></small>197</h5> </li>
+															<li>
+																<span class="text-muted">Successful<br>Applications<br>Submitted on time</span>
+															</li>
+														</ul>
+													</div>
+
+												
+
+								</div>
+									<div class="bgc-gray panel-heading" style="border-top: 1px solid #272727;">
+									<h5 class="panel-title"><i class="icon-user position-left"></i> Invite Applicant</h5>
+									<div class="heading-elements">
+										<span class="heading-text no-margin"><button class="btn btn-xs btn-default">View Detail</button></span>
+				                	</div>
+                                
+                                
+                                </div>
+
+                            </div>
+   
+                    </div>
+                    
+                    
+                    <div class="col-md-3 column-panel-sortable">
+                            	<div class="panel panel-white bgc-gray">
+                                   
+								<div class="panel-body text-center" style="padding: 0;
+    padding-top: 47px;
+    padding-bottom: 7px;">
+									
+													<div class="media-left no-padding">
+														<h1 class="no-margin"><i class="icon-circle-up2 text-success-600" style="font-size: 73px;line-height: 85px;"></i></h1>
+													</div>
+
+													<div class="media-left no-padding">
+														
+														<ul class="list-inline-condensed no-margin text-left" style="list-style:none;padding-left: 10px;padding-top: 9px;">
+														<li> <h5 class="no-margin" style="font-size: 34px;line-height: 25px;"><small class="text-success-600 text-size-base" style="width:100%; float:left;"><i style="font-size: 21px;font-style: normal;">55%</i></small>197</h5> </li>
+															<li>
+																<span class="text-muted">Over due<br>Applicants not<br>responding</span>
+															</li>
+														</ul>
+													</div>
+
+												
+
+								</div>
+									<div class="bgc-gray panel-heading" style="border-top: 1px solid #272727;">
+									<h5 class="panel-title"><i class="icon-user position-left"></i> Drop OR Re-invite</h5>
+									<div class="heading-elements">
+										<span class="heading-text no-margin"><button class="btn btn-xs btn-default">View Detail</button></span>
+				                	</div>
+                                
+                                
+                                </div>
+
+                            </div>
+   
+                    </div>
+                    
+                    
+                    <div class="col-md-3 column-panel-sortable">
+                            	<div class="panel panel-white bgc-gray">
+                                   
+								<div class="panel-body text-center" style="padding: 0;
+    padding-top: 47px;
+    padding-bottom: 7px;">
+									
+													<div class="media-left no-padding">
+														<h1 class="no-margin"><i class="icon-circle-up2 text-success-600" style="font-size: 73px;line-height: 85px;"></i></h1>
+													</div>
+
+													<div class="media-left no-padding">
+														
+														<ul class="list-inline-condensed no-margin text-left" style="list-style:none;padding-left: 10px;padding-top: 9px;">
+														<li> <h5 class="no-margin" style="font-size: 34px;line-height: 25px;"><small class="text-success-600 text-size-base" style="width:100%; float:left;"><i style="font-size: 21px;font-style: normal;">55%</i></small>197</h5> </li>
+															<li>
+																<span class="text-muted">Application<br>completed<br> with in SLA</span>
+															</li>
+														</ul>
+													</div>
+
+												
+
+								</div>
+									<div class="bgc-gray panel-heading" style="border-top: 1px solid #272727;">
+									<h5 class="panel-title"><i class="icon-user position-left"></i> Invite Applicants</h5>
+									<div class="heading-elements">
+										<span class="heading-text no-margin"><button class="btn btn-xs btn-default">View Detail</button></span>
+				                	</div>
+                                
+                                
+                                </div>
+
+                            </div>
+   
+                    </div>
+                    
+                
+                </div>-->
+                
+                <?php /*?><div class="row mb-10">
+                	<?php 
+					   $postfields["action"] = "getannouncements";
+						$postfields["limitstart"] = "0";
+						$postfields["limitnum"] = "4";
+						$URL= WHMCS_APIURL;
+						
+						$xml=whmcs_api($URL,$postfields);
+						$arr=whmcsapi_xml_parser($xml); 
+				?>
+                	<div class="col-lg-12">
+                    	<div class="news_feed">
+			<p class="newsfeed_label">Announcement <span class="badge bg-danger-400 heading-text"><?=$arr['WHMCSAPI']['TOTALRESULTS']?></span> </p>
+			<ul id="ticker01">
+				<?php
+                
+                
+						
+						$announcements=$arr['WHMCSAPI']['ANNOUNCEMENTS'];
+						if($arr['WHMCSAPI']['TOTALRESULTS']>0){
+						foreach($announcements as $val){ 
+						$time_diff = time_ago(strtotime($val['DATE']));
+						
+                ?>
+                <li><a href="http://backcheckgroup.com/support/announcements.php?id=<?=$val['ID']?>"><?=strip_tags($val['ANNOUNCEMENT'])?></a><span>| <?=$time_diff?> |</span></li>
+				<?php
+}
+}
+else
+{echo "<li align='center'>No Record Found</li>";}
+?>		
+
+			</ul>
+		</div>
+                    </div>
+                </div><?php */?>
+                
+                
+					<div class="row">
+						<!--left area-->
+						<div class="col-lg-8">
+                        <!-- Selection Area Start -->
+				
+				
+				
+				<!-- Selection Area End -->
+                        
+								<!-- Quick stats boxes -->
+							<div class="row">
+				<!-- Counts Boxes Start -->
+					 <?php include("include_pages/count_boxes_dashboard.php");?>
+				<!-- Counts Boxes End -->
+							
+							</div>
+							<!-- /quick stats boxes -->
+                            <?php include("include_pages/selection_area_dashboard.php");?>
+                                                        
+                            <div class="row">
+                            	
+				<!-- Credit Consumption Area Start -->
+                 <?php include("include_pages/credit_consumption_chart.php");?>  
+				<!-- Credit Consumption Area End -->  
+                            
+                            </div>
+					
+					<!-- Applicants Table -->
+				<?php	include("include_pages/applicant_table.php") ;?>	
+					<!-- Applicants Table -->
+                    
+
+					<!--suport start-->
+					<?php if($LEVEL==4 || $LEVEL==5){ include("include_pages/support_section_dash.php"); }?>
+						<!--suport end-->
+
+						
+                     <!-- Fusion tables -->
+					<!--<div class="panel panel-flat">
+						<div class="panel-body">-->
+							<!--<div class="map-container map-layer-fusion-tables"></div>-->
+                            <?php
+                            //include("include_pages/dsr_news_page.php");
+							?>
+						<!--</div>
+					</div>-->
+					<!-- /fusion tables -->
+                            
+                            
+							
+					</div><!--left area-->
+						
+						<!--right area-->
+						<div class="col-lg-4">
+						
+						
+						        <!-- activity stream Area Start -->
+				<?php 
+					   include("include_pages/activity_stream.php");
+					   $postfields["action"] = "getannouncements";
+						$postfields["limitstart"] = "0";
+						$postfields["limitnum"] = "1";
+						$URL= WHMCS_APIURL;
+						
+						$xml=whmcs_api($URL,$postfields);
+						$arr=whmcsapi_xml_parser($xml); 
+				?>
+				<!-- activity stream Area End -->
+                <div class="row">
+					<!-- Credit Consumption Area Start -->
+					<?php include("include_pages/report_boxes_dashboard.php");?> 
+					<!-- Credit Consumption Area End --> 
+				</div>
+                
+                
+                
+                
+                
+                <?php /*?><div>
+                <div class="panel panel-flat">
+								<div class="panel-heading">
+									<h5 class="panel-title">Anoucments <span class="badge bg-danger-400 heading-text"><?=$arr['WHMCSAPI']['TOTALRESULTS']?></span></h5>
+									<div class="heading-elements">
+										<span class="heading-text no-margin"><a href="<?php echo SURL; ?>?action=announcements&atype=view" class="btn btn-xs bg-success">View All</a></span>
+									</div>
+								<a class="heading-elements-toggle"><i class="icon-menu"></i></a></div>
+
+								<div class="panel-body">
+									<div class="content-group-xs" id="bullets"></div>
+
+									<ul class="media-list">
+										<?php
+                
+                
+						
+						$announcements=$arr['WHMCSAPI']['ANNOUNCEMENTS'];
+						if($arr['WHMCSAPI']['TOTALRESULTS']>0){
+						foreach($announcements as $val){ 
+						$time_diff = time_ago(strtotime($val['DATE']));
+						
+                ?>
+                
+                	      
+                                        <li class="media">
+											<div class="media-left">
+												<a href="http://backcheckgroup.com/support/announcements.php?id=<?=$val['ID']?>" class="btn border-info-600 text-info-600 btn-flat btn-rounded btn-icon btn-xs"><i class="icon-megaphone"></i></a>
+											</div>
+											
+											<div class="media-body">
+												<a href="http://backcheckgroup.com/support/announcements.php?id=<?=$val['ID']?>"><?=$val['TITLE']?></a>
+												<div class="media-annotation"><?=$val['ANNOUNCEMENT']?></div>
+                                                <div class="media-annotation"><?=$time_diff?></div>
+											</div>
+										</li>
+                                        
+                                        <?php
+}
+}
+else
+{echo "<li align='center'>No Record Found</li>";}
+?>		
+
+									</ul>
+								</div>
+							</div>
+                
+						 
+					
+					</div><?php */?>
+                    
+                    <!--<div class="panel panel-flat text-center bg-info-700">
+                    	<!-- stardevelop.com Live Help International Copyright - All Rights Reserved //-->
+<!--  BEGIN stardevelop.com Live Help Messenger Code - Copyright - NOT PERMITTED TO MODIFY IMAGE MAP/CODE/LINKS //-->
+<!--<a href="#" class="LiveHelpButton default"><img src="http://backcheckgroup.com/support/modules/livehelp/include/status.php" id="LiveHelpStatusDefault" name="LiveHelpStatusDefault" border="0" alt="Live Help" class="LiveHelpStatus"/></a>-->
+<!--  END stardevelop.com Live Help Messenger Code - Copyright - NOT PERMITTED TO MODIFY IMAGE MAP/CODE/LINKS //-->
+<!-- stardevelop.com Live Help International Copyright - All Rights Reserved //-->
+            <!--<div class="Xcluesiv"><a href="http://xcluesiv.com/" >Powered by Xcluesiv Cloud Technology Pte Ltd</a></div>-->
+                   <!-- </div>-->
+                    
+                <!--annoucment area end-->
+						
+						<?php /*?><div class="panel panel-flat">
+                        
+                        <div class="panel-body">
+                        	<?php 
+				 $whmcsurl = "http://backcheckgroup.com/support/dologin.php";
+					$autoauthkey = "abcXYZ123";
+					$timestamp = time();
+					$email = $_SESSION['email'];
+					$hash = sha1($email.$timestamp.$autoauthkey);
+				?>
+ <form action="http://backcheckgroup.com/support/dologin.php" target="_blank" method="post">
+ <input type="hidden" value="<?=$email?>" name="email">
+ <input type="hidden" value="<?=$timestamp?>" name="timestamp">
+ <input type="hidden" value="<?=$hash?>" name="hash">
+ <input type="submit" class="btn btn-primary" value="Support Center"></form>
+                       </div>
+                       </div><?php */?>
+                        
+                        
+                        <?php include("include_pages/chart_sla_new_inc.php");?> 
+                        
+                        <div class="panel panel-white bloging">
+                	<div class="bg-grey panel-heading" style="background-color: #263238;border-color: #263238;">
+                    	<h5 class="panel-title">Blog Posts</h5>
+                    </div>
+                    <div class="panel-body">
+                    	
+                        <div class="flexslider">
+                        <ul class="media-list slides">
+                        <?php 
+						$curl = @curl_init();
+						@curl_setopt_array($curl, Array(
+							CURLOPT_URL            => 'http://backcheckgroup.com/feed/',
+							CURLOPT_USERAGENT      => 'spider',
+							CURLOPT_TIMEOUT        => 120,
+							CURLOPT_CONNECTTIMEOUT => 30,
+							CURLOPT_RETURNTRANSFER => TRUE,
+							CURLOPT_ENCODING       => 'UTF-8'
+						));
+						$data = @curl_exec($curl);
+						@curl_close($curl);
+						$xml = @simplexml_load_string($data, 'SimpleXMLElement', LIBXML_NOCDATA);
+						foreach ($xml->channel->item as $item) {
+						?>
+                        	<li class="media" style="margin-top:0;">                
+                                <div class="media-left">
+                                    <a href="<?=$item->link?>" class="btn bgc-red">
+                                    <?php 
+										$pdate=$item->pubDate;
+										$day=date("d",strtotime($pdate));
+										$monyear=date("M Y",strtotime($pdate));
+									?>
+                                   		<h4 class="no-margin text-semibold"><?=$day?> <span class="display-block"><?=$monyear?></span></h4>
+                                    </a>
+                                </div>
+                                <div class="media-body"> <h5 class="no-margin"><?=$item->title?></h5></div>
+                                
+                                <div class="mt-20"><?=substr ($item->description,0,300)?>...<a href="<?=$item->link?>">Read more</a></div>
+                          </li>
+                          
+                         <?php } ?> 
+                        </ul>
+                    	</div>
+                    
+                    	<div class="custom-navigation">
+          <a href="#" class="flex-prev"><i class="icon-arrow-left52"></i></a>
+          <div class="custom-controls-container"></div>
+          <a href="#" class="flex-next"><i class="icon-arrow-right6"></i></a>
+        </div>
+                    
+                    
+                    
+                    </div>
+                </div><!--Blog Post-->
+                        
+                        
+                        
+						</div>
+                        
+                
+                
+						<!--right area-->
+					
+					</div>
+						
+						<?php /*?><div class="row">
+						<div class="col-lg-12">
+
+							<!-- Support tickets -->
+							<div class="panel panel-white">
+								<div class="panel-heading">
+									<h6 class="panel-title">Support tickets</h6>
+                                    <div class="heading-elements">
+                                    <ul class="icons-list no-margin">
+                                    	<li><a href="#" class="btn btn-xs bg-teal-400" data-toggle="modal" data-target="#openticket" ><i class="icon-statistics position-left"></i> Open Ticket</a>
+<div class="modal fade" id="openticket" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">New Open Ticket</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+           <div class="form-group">
+            <label for="message-text" class="control-label">Subject:</label>
+            <input type="text" class="form-control" name="ticketsubject" id="message-text" /> 
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="control-label">Priority:</label>
+            
+            <select name="inputpriority" id="inputpriority" class="form-control">
+                <option value="High">
+                    High
+                </option>
+                <option value="Medium" selected="selected">
+                    Medium
+                </option>
+                <option value="Low">
+                    Low
+                </option>
+            </select>            
+            
+            
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="control-label">Message:</label>
+            <textarea class="form-control" name="ticketmessage" id="message-text"></textarea>
+          </div>
+          <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <input type="submit" name="submitopenticket" class="btn btn-primary" value="Open Ticket"> 
+      </div>
+        </form>
+         
+      </div>
+     
+    </div>
+  </div>
+</div>                                               
+</li>
+<li><a href="#" class="btn btn-xs bg-teal-400"><i class="icon-statistics position-left"></i> View All Tickets</a></li>        
+                                    
+                                    </ul>
+                                                    
+                                    </div>
+                                    
+								</div>
+                                
+                                <div class="panel-body">
+
+								<div class="table-responsive">
+									<table class="table text-nowrap">
+										<thead>
+											<tr>
+												<th style="width: 50px">Date</th>
+												<th style="width: 300px;">Subject</th>
+												<th>Description</th>
+                                                <th>Status</th>
+												<th class="text-center">Action</th>
+											</tr>
+										</thead>
+										<tbody>
+<?php
+
+
+
+
+
+ 
+
+ $getUserInfo = getUserInfo($_SESSION['user_id']); 
+
+
+ 
+ // REPLY TICKET  STRAT //
+ 
+if(isset($_POST['submitreply']))
+{
+	$tid = $_POST['ticketid'];
+	$replymessage = $_POST['replymessage'];
+ 	
+ $postfields["action"] = "addticketreply"; 
+ $postfields["ticketid"] = $tid;
+ $postfields["adminusername"] = "Auto-Response";
+ $postfields["message"] = $replymessage;
+  
+  $URL= WHMCS_APIURL;
+$xml= whmcs_api($URL,$postfields);
+ // $xml=validatelogin($email,$pass,$url);
+ $arrx = whmcsapi_xml_parser($xml); 
+ //print_r($arrx);
+	if($arrx['WHMCSAPI']['RESULT'] == "success")
+	{
+		echo '<div class="alert alert-success"><strong>Success!</strong> Reply Send Successfully.</div>';
+	}	
+ }
+ 
+ // REPLY TICKET  END //
+
+ // OPEN TICKET  STRAT //
+ 
+if(isset($_POST['submitopenticket']))
+{
+	$ticketsubject = $_POST['ticketsubject'];
+	$inputpriority = $_POST['inputpriority'];
+	$ticketmessage = $_POST['ticketmessage'];
+ 	
+$postdata = array(
+    'action' => 'OpenTicket',
+    'clientid' => $getUserInfo['whmcs_clid'],
+    'deptid' => '1',
+    'subject' => $ticketsubject,
+    'message' => $ticketmessage,
+    'priority' => $inputpriority,
+);
+  $URL= WHMCS_APIURL;
+
+$xml=whmcs_api($URL,$postdata);
+$arr = whmcsapi_xml_parser($xml);
+//print_r($arr);
+
+	if($arr['WHMCSAPI']['RESULT'] == "success")
+	{
+		echo '<div class="alert alert-success"><strong>Success!</strong> Ticket Add Successfully.</div>';
+	}
+	else	
+	{
+		echo '<div class="alert alert-success"><strong>Error!</strong> Failed to Ticket Add.</div>';
+	}	
+ }
+ 
+ // OPEN TICKET  END //
+ 
+ 
+ 
+ $postfields["clientid"] = $getUserInfo['whmcs_clid'];
+ $postfields["email"] = $getUserInfo['email'];
+ $postfields["deptid"] = "1";
+ $postfields["action"] = "gettickets";
+ $URL= WHMCS_APIURL;
+$xml= whmcs_api($URL,$postfields);
+ // $xml=validatelogin($email,$pass,$url);
+ $arr = whmcsapi_xml_parser($xml); 
+ $tickets=$arr['WHMCSAPI']['TICKETS'];
+ if($arr['WHMCSAPI']['TOTALRESULTS']>0){
+foreach($tickets as $val){  
+$time_diff = time_ago(strtotime($val['DATE']));
+     
+	 
+	 $tick_id = $val['ID'];
+?>
+
+											<tr>
+												<td class="text-center">
+													<h6 class="no-margin"> <small class="display-block text-size-small no-margin"><?=$time_diff?></small></h6>
+												</td>
+												<td>
+														<a href="#" class="display-inline-block text-default text-semibold letter-icon-title"><?=$val['NAME']?></a>
+														
+												</td>
+												<td>
+													<a href="#" class="text-default display-inline-block">
+														<span class="text-semibold"><?=$val['SUBJECT']?></span>
+														
+													</a>
+												</td>
+                                                <td><span class="label bg-success"><?=$val['STATUS']?></span></td>
+												<td class="text-center">
+													<ul class="icons-list">
+														<li class="dropdown">
+															<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
+															<ul class="dropdown-menu dropdown-menu-right">
+																<li><a href="#"  data-toggle="modal" data-target="#exampleModal<?=$tick_id?>" ><i class="icon-undo"></i> Quick reply</a></li>
+															</ul>
+														</li>
+													</ul>
+                                                    
+<div class="modal fade" id="exampleModal<?=$tick_id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+           <input type="hidden" class="form-control" name="ticketid" value="<?=$tick_id?>" >
+          <div class="form-group">
+            <label for="message-text" class="control-label">Message:</label>
+            <textarea class="form-control" name="replymessage" id="message-text"></textarea>
+          </div>
+          <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <input type="submit" name="submitreply" class="btn btn-primary" value="Send message"> 
+      </div>
+        </form>
+         
+      </div>
+     
+    </div>
+  </div>
+</div>                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+												</td>
+											</tr>
+                                            
+                                            
+
+
+
+<?php
+}
+}
+else
+{echo "<tr><td align='center' colspan='4'>No Record Found</td></tr>";}
+?>											
+ 
+
+								</tbody>
+									</table>
+								</div>
+                                
+                                </div>
+                                
+                                
+                                
+                                
+							</div>
+							<!-- /support tickets -->
+
+
+							<!-- Latest posts -->
+							
+							<!-- /latest posts -->
+
+						</div>
+
+						<div class="col-lg-4">
+                    
+                    </div>
+					</div><?php */?>
+
+<script>
+function submitFrm(frmid){
+				
+				document.frmid.submit();
+				
+			}
+</script>
+ <script type="text/javascript">
+			
+			function saveFilter(filter_what,filter_by,div_class){
+				//alert(id);
+				//images/spinners/3.gif
+				 $("."+div_class).html('<li><img align="center" src="images/spinners/3.gif" /></li>');
+				$.ajax({
+	url: "actions.php",
+	data:'ePage=add_rating&filter_what='+filter_what+'&filter_by='+filter_by+'&com_id=<?php echo $company_id;?>',
+	type: "POST",
+	success: function(res){
+    if(res=='inserted' || res=='updated'){
+		
+	$.ajax({
+	url: "actions.php",
+	data:'ePage=filtered_data&filter_what='+filter_what+'&com_id=<?php echo $company_id;?>',
+	type: "POST",
+	success: function(rs){
+	
+	if(filter_what=='by_risk'){
+		var myarr = rs.split(";");
+		
+		var amber 		= myarr[0];
+		var red 		=  myarr[1];
+		var green 		= myarr[2];
+						
+	proton.dashboard.drawByRisk(amber,red,green);
+
+	}else if(filter_what=='by_status'){
+		$("."+div_class).html(rs);
+		//var dt = $("."+div_class).html();
+		//console.log(dt);
+		 //Highcharts.data(dt);
+		 
+		 Highcharts.data({
+        csv: $("."+div_class).html(),
+        itemDelimiter: '\t',
+        parsed: function (columns) {
+
+            var brands = {},
+                brandsData = [],
+                versions = {},
+                drilldownSeries = [];
+
+            // Parse percentage strings
+            columns[1] = $.map(columns[1], function (value) {
+                if (value.indexOf('%') === value.length - 1) {
+                    value = parseInt(value);
+                }
+                return value;
+            });
+
+            $.each(columns[0], function (i, name) {
+                var brand,
+                    version;
+
+                if (i > 0) {
+					
+                    // Remove special edition notes
+                    name = name.split(' -')[0];
+
+                    // Split into brand and version
+                    version = name.match(/([0-9]+[\.0-9x]*)/);
+                    if (version) {
+                        version = version[0];
+                    }
+                    brand = name.replace(version, '');
+					
+                    // Create the main data
+                    if (!brands[brand]) {
+                        brands[brand] = columns[1][i];
+                    } else {
+                        brands[brand] += columns[1][i];
+                    }
+
+                    // Create the version data
+                    if (version !== null) {
+                        if (!versions[brand]) {
+                            versions[brand] = [];
+                        }
+                        versions[brand].push(['v' + version, columns[1][i]]);
+                    }
+					
+                }
+
+            });
+
+            $.each(brands, function (name, y) {
+                brandsData.push({
+                    name: name,
+                    y: y,
+                    drilldown: versions[name] ? name : null
+                });
+            });
+            $.each(versions, function (key, value) {
+                drilldownSeries.push({
+                    name: key,
+                    id: key,
+                    data:  parseInt(value)
+
+					
+                });
+            });
+
+            // Create the chart
+            $('#container_st').highcharts({
+				credits: {
+      				enabled: false
+	  			},
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+					allowDecimals: false,
+                    type: 'category'
+                },
+                yAxis: {
+					allowDecimals: false,
+                    title: {
+                        text: ''
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.0f}'
+                        }
+                    }
+                },
+				colors: [
+					'#00b9f7',
+					'#8DC655',
+					'#FFC943',
+					'#e8511a'
+				],
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px"><b>{point.y:.0f}</b> {series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>'
+                },
+
+                series: [{
+					
+                    name: 'Check(s)',
+                    colorByPoint: true,
+                    data: brandsData
+                }],
+                drilldown: {
+                    series: drilldownSeries
+                }
+            });
+        }
+    });
+		 
+		 
+		 
+		 
+		 
+		
+	}else{
+	$("."+div_class).html(rs);	
+	}	
+		
+	
+	
+	}
+	
+	
+	});
+	
+	
+	
+	
+	
+	
+		
+	}else{
+		$("."+div_class).html('');
+		alert(res);
+		
+	}
+	},
+	error: function(){
+    alert('failed to load request');
+	}
+	
+	
+	});
+				
+				
+			}
+			
+			
+			
+			
+			function setLocation(){
+				
+				document.frm_loc.submit();
+				
+			}
+			
+			
+			</script>
+                   
+  <script defer src="scripts/jquery.flexslider-min.js"></script>
+
+  <script type="text/javascript">
+    $(function(){
+      SyntaxHighlighter.all();
+    });
+    $(window).load(function(){
+      $('.flexslider').flexslider({
+        animation: "slide",
+        controlsContainer: $(".custom-controls-container"),
+        customDirectionNav: $(".custom-navigation a"),
+        start: function(slider){
+          $('body').removeClass('loading');
+        }
+      });
+    });
+  </script>
+				
+                
+                </div>
+				<!-- /content area -->
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+
+
+

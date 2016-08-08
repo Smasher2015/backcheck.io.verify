@@ -1,0 +1,142 @@
+<?php
+$uID = $_SESSION['user_id'];
+//print_r($COMINF);
+//$com_id = $COMINF['id'];
+$com_id = 96;
+//$where = "com_id='".$com_id."' ";
+//					$Q = $db->select("client_agreement","*",$where);
+//$is_checks = mysql_num_rows($Q);
+	 $tabl = "client_agreement_confg as cagr INNER JOIN company as c ON cagr.comps_id=c.id";
+ 	$Q = $db->select($tabl,"*","cagr.comps_id = '".$com_id."' and c.is_active=1 ORDER BY cagr.agrID ");
+
+$data = mysql_fetch_array($Q);
+ // print_r($data);
+  if($data['is_suspend_active'] == 1)
+  {
+	  echo "Agreement Suspended.";
+  }
+ // ] => 1 [is_send] => 1 [3] => 0 [is_suspend_active] => 0 [4] 
+  
+/*	 $tabl = "clients_checks as cagr INNER JOIN company as c ON cagr.comps_id=c.id";
+ 	$Q = $db->select($tabl,"*","cagr.comps_id = '".$com_id."' and c.is_active=1 ORDER BY cagr.agrID ");
+
+$data = mysql_fetch_array($Q);
+ print_r($data);
+*/
+
+?>
+
+REPORT TYPE	CURRENCY	India	Other</p><br /><br /><br /><br />
+<table>
+<tr><th>Check Name</th><th>Cost</th><th>Currency</th></tr>
+<h2>Running Checks</h2>
+<?php //print_r($data);
+$com_id = 96;
+$where = "com_id='".$com_id."' ";
+					$Q3 = $db->select("clients_checks","*",$where);
+  			while($res = mysql_fetch_array($Q3))
+			{  
+				$checks = getCheck($res['checks_id']);
+				?>
+                <tr>
+            <td><?=$checks['checks_title']?></td> <td><?=$res['clt_cost']?></td> <td><?=$res['clt_currency']?></td>
+             </tr>
+
+			<?php
+             
+			//print_r($checks);
+			}		 
+ ?>
+ </table>
+<br /><br /><br /><br />
+
+
+
+
+
+
+
+<section class="retracted scrollable">
+<div class="row">
+  <div class="col-md-12">
+    <div class="report-sec">
+    <div><div class="page-header">
+       		<div class="page-header-content">
+        		<div class="page-title3">	
+        <h3>Agreement Approval</h3>
+     
+     </div>
+     </div>
+     </div>
+      <div class="panel panel-flat">
+        <div class="panel-body">
+			 
+            
+            
+<h3 class="text-center text-semibold">MASTER SERVICES AGREEMENT BACKCHECKGROUP.COM</h3>
+<p>Agreement for <b>the Supply of Employee Background Screening Services</b> (“Master Agreement”) is entered into as of the date signed below (the “Effective Date”) by the company identified below (“South City Hospital”) and <b>BACKGROUND CHECK PRIVATE LIMITED,</b>  hereafter referred to as service provider (“SERVICE PROVIDER”).</p>
+
+<h3 class="text-center text-semibold">WITNESSETH</h3>
+
+<p>CLIENT may be a requestor of certain employment and income verification reports from Service Provider pursuant to the terms and conditions of an Addendum entered into between CLIENT and SERVICE PROVIDER; and/or</p>
+<p>CLIENT may be a furnisher of certain information who desires to provide SERVICE PROVIDER with certain data including but not limited to income and employment verification information relating to current and/or former employees and to have the SERVICE PROVIDER collect, administer and retain the data strictly on behalf of the Furnisher.</p>
+<p>CLIENT wishes to obtain these services from SERVICE PROVIDER, and SERVICE PROVIDER desires to provide to CLIENT such services as further described in Section 1 below;</p>
+<p>NOW, THEREFORE, CLIENT and SERVICE PROVIDER agree as follows:</p>
+
+<ul class="list" style="list-style-type:decimal">
+	<li><b>Designation of Services.</b>
+    	<ul class="list" style="list-style-type:lower-alpha">
+        	<li><b>Form of Service Addendum.<b></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        
+        </ul>
+    
+    </li>
+
+</ul>
+
+
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+
+
+
+
+            
+            
+            
+        </div>
+       
+        <?php
+		if($data['is_send'] == 1 && $data['agr_status'] == 1 && $data['is_suspend_active'] != 1)
+			{
+			//[is_send] => 1 [3] => 1 [is_suspend_active] => 1 [4] => 2 [agr_status] => 2 [5
+			?>
+                  <form method="post">
+                  	<input type="submit" name="acceptgreement" class="btn bgc-success btn-xs "  value="Accept" />
+                  	<input type="submit" name="rejectagreement" class="btn bgc-red btn-xs mr-5"  value="Reject" />
+                  </form>
+            <?php
+			}
+
+		
+		?>
+      </div>
+    </div>
+   
+    
+        
+
+    
+  </div>
+</div>
+
