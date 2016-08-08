@@ -1,0 +1,54 @@
+<div class="box grid_16">
+        <h2 class="box_head"><span class="section">Reports: <?=$PTITLE?></span></h2>
+        <a href="#" class="grabber">&nbsp;</a>
+        <a href="#" class="toggle">&nbsp;</a>
+        <div class="toggle_container">
+            <div class="block">
+                <h2 class="section">By Applicant</h2>
+                <form method="post">
+                   <fieldset class="label_side">
+                        <label for="v_name">Full Name</label>
+                        <div>
+                        <input type="text" name="v_name" value="<?=$_REQUEST['v_name']?>" />
+                        </div>
+                   </fieldset>		
+                    
+                   <fieldset class="label_side"> 
+                        <label for="v_bcode">Barcode</label>
+                        <div>
+                        <input type="text" id="v_bcode" name="v_bcode" value="<?=$_REQUEST['v_bcode']?>"/>
+                        </div>
+                   </fieldset>
+                   <fieldset class="label_side">
+                        <label for="v_dob">Date Of Birth</label>
+                        <div class="clearfix">
+                            <input type="text" class="datepicker" style="width:100px;" id="v_dob" name="v_dob" value="<?=$_REQUEST['v_dob']?>" /> 
+                        </div>
+                   </fieldset>	
+                   <div class="button_bar clearfix" >
+                   <button class="next_step move send_right" name="advance_search">
+                        <img height="24" width="24" alt="Bended Arrow Right" src="images/icons/small/white/bended_arrow_right.png">
+                        <span>Search</span>
+                   </button>
+                </div>
+                </form>
+        	</div>
+        </div>
+               
+</div>
+    
+<?php 	if(isset($_POST['advance_search'])){
+	 		if(!empty($_REQUEST['v_name'])) $IPAGE['m_where']    = "d.v_name like '%".trim($_REQUEST['v_name'])."%'";
+			if(is_numeric($_REQUEST['v_name'])) $IPAGE['m_where']="d.emp_id=$_REQUEST[v_name]";
+			if(!empty($_REQUEST['v_bcode'])){
+				 $IPAGE['m_where'] .= (($IPAGE['m_where']!='')?" OR ":"")."d.v_bcode='".trim($_REQUEST['v_bcode'])."'";
+			}
+			if(!empty($_REQUEST['v_dob'])){
+				$date=changDate($_REQUEST['v_dob']);
+				$IPAGE['m_where'] .= (($IPAGE['m_where']!='')?" OR ":"")."d.v_dob like '%$date%'";
+			}		
+			
+			include("include_pages/cases-main_inc.php"); 
+			
+		}
+?>

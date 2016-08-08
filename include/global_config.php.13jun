@@ -1,0 +1,17 @@
+<?php 
+	define("HOST",'localhost');
+	define("DB",'devxclue_verify365');
+	define("USER",'devxclue_365');
+	define("PASS",'QcZF{+@}BT]h');
+	define("SITE_URL",'198.23.189.10');
+	define("SURL",'http://dev.xcluesiv.com/verify365/');
+	define("SITENM",'BackgroundCheck365');
+	define("DEMAIL",'noreply@backgroundCheck365.com');
+	define("PORTAL",'BackgroundCheck365 Verification System');
+	define("BASE_URL",$_SERVER['DOCUMENT_ROOT']);
+	define("DEV_BASE_URL",$_SERVER['DOCUMENT_ROOT']."/verify365/");
+	define("APPLICANT","Applicant");
+	
+	//define("SITE_ROOT",'home/verifbck/public_html/dashboard/');
+	$BCPV=3.4;
+?>

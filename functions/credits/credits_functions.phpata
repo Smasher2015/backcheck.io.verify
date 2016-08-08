@@ -1,0 +1,290 @@
+<?php
+
+	function generateMonthlyInvoices($com_id){
+		global $db;
+		$today = date("Y-m-d");
+		$invoice_date = date("Y-m-d (h:i A)");
+		$thisMonth = date("Y-m-01");
+		$due_date = getdatedifference($today,15);
+		$due_date = 	date("Y-m-d", strtotime($due_date));
+		$companyTax = getCompanyTax($com_id);
+		$selCom = getcompany($com_id);
+		$rsCom = @mysql_fetch_assoc($selCom);
+		$credits = $rsCom['credits'];
+		$monthly_credits_allowed = $rsCom['monthly_credits_allowed'];
+		
+		$rsCost =  @mysql_fetch_assoc($db->select("client_invoices ci INNER JOIN ver_data vd on ci.v_id=vd.v_id","SUM(cost) as cost,invoice_number","paid=0 AND DATE(add_date) >= '$thisMonth' AND DATE(add_date) <= '$today' AND ci.com_id=$com_id AND vd.v_isdlt=0"));
+		$total = $rsCost['cost'];
+		if(is_numeric($companyTax) && $companyTax!=0){
+		$taxAmount = round(($total*$companyTax)/100);	
+		$grand_total = $total+$taxAmount;
+		}
+		
+		
+		if($rsCost['invoice_number']==""){
+		$upd=true;	
+		
+		
+		$db->insert("total,grand_total,due_date","'$total','$grand_total','$due_date'","monthly_invoice");	
+		
+		$invoice_id = $db->insertedID;
+		
+		$invoice_number = "RD/L/".date("y")."/".date("m")."/".$invoice_id;
+		$our_ref = "RD/PPL/".date("y")."/".date("m")."/".$invoice_id."-".$invoice_id;
+		
+		
+		$db->updateCol("invoice_number,our_ref","'$invoice_number','$our_ref'",'monthly_invoice',"id=$invoice_id");
+		}else{
+		$upd=false;
+		$rsInv =  @mysql_fetch_assoc($db->select("monthly_invoice","id,add_date,our_ref","invoice_number='$rsCost[invoice_number]'"));
+		$invoice_id = $rsInv['id'];
+		$invoice_date = $rsInv['add_date'];
+		$invoice_date = date("Y-m-d (h:i A)",strtotime($invoice_date));
+		$invoice_number = $rsCost['invoice_number'];
+		$our_ref = $rsInv['our_ref'];
+		}
+		
+		$rst = $db->select("ver_data vd JOIN client_invoices ci ON vd.v_id=ci.v_id ","ci.id as ci_id, ci.v_id, v_name AS  'Applicant', ci.cost AS cost,  v_name, ci.add_date","ci.paid=0 AND DATE(ci.add_date) >= '$thisMonth' AND DATE(ci.add_date) <= '$today' AND ci.com_id=$com_id  AND vd.v_isdlt=0");
+		
+		$tbls = "ver_checks";
+		$cols = "*";
+		$bodyText = '<table width="100%" border="0" >
+					<tr>
+					<td align="center"  colspan="6" >SALES TAX INVOICE<br />
+					Background Check (Private) Limited<br />
+					3rd Floor, GSA House, 19 Timber Pond,, Near KPT Overpass Bridge East Wharf,<br />
+					Keamari, Karachi - Pakistan<br />
+					Tel. : 92-21-32863920 - 31 Fax : 92-21-32863931 email : info@riskdiscovered.com<br />
+					SNTN: S2913136-7, NTN: 2913136-7 <br />
+					</td>
+					</tr>
+					<tr><td align="center"  colspan="6" >&nbsp;</td></tr>
+					<tr>
+					<td align="left"  colspan="2" >Party Details :<br />
+					Pakistan Petroleum Limited<br />
+					Saleem Ahmed Payment<br />
+					Human Resources Department<br />
+					Road, Karachi. Tele: 35234610<br />
+					</td>
+					<td align="left"  colspan="2" >
+					Invoice No.  :<br />
+					Dated :<br />
+					Payment Due Dat :<br />
+					Our Ref. :<br />
+					Your Ref.<br />
+					 NTN #:<br />
+					</td>
+					<td align="left"  colspan="2" >
+					 '.$invoice_number.'<br />
+					 '.$invoice_date.'<br />
+					 '.$due_date.'<br />
+					'.$our_ref.'<br />
+					 NILL<br />
+					 2913136-7 <br />
+					</td>
+					</tr>
+					<tr><td align="center"  colspan="6" >&nbsp;</td></tr>
+					<tr>
+					<th align="center"   >S.N</th>
+					<th align="center"  >Description of Goods </th>
+					<th align="center"  >Add. Field </th>
+					<th align="center"   >Qty. Unit </th>
+					<th align="center"  >Price</th>
+					<th align="center"   > Amount(Rs.)</th>
+					
+					
+					</tr>
+					<tr><td align="center"  colspan="6" >&nbsp;</td></tr>';
+					
+				$InvoiceBody = $bodyText;	
+			
+					
+					
+					
+					
+					
+					
+					
+				 
+			  
+			$c=0; 
+			$applicant_count=@mysql_num_rows($rst);
+			
+			$total = 0;
+			$checks_count =0;
+		while($rs = @mysql_fetch_assoc($rst)) { 
+		if($upd){
+		$db->updateCol("invoice_number","'$invoice_number'",'client_invoices',"id=$rs[ci_id]");
+		echo "update  client_invoices set invoice_number='$invoice_number'  where id=$rs[ci_id]";
+		}
+		$checks = $db->select($tbls,$cols,"v_id=$rs[v_id]  AND as_isdlt=0");
+	
+		
+		while($rsc = @mysql_fetch_assoc($checks)){
+			$c++;
+			$checks_count++;
+			$bodyText .= '
+			<tr>
+			<td align="center"  >'.$c.'	</td>		
+			<td align="left"  >'.getCheckTitle($rsc['checks_id']).'</td>
+			<td align="center"  >--	</td>
+			<td align="center"  >--	</td>
+			<td align="center"  >--	</td>
+			<td align="center"  >'.$rsc['as_cost2'].'</td>
+			</tr>';
+			
+			$total = $total+$rsc['as_cost2'];
+		
+		}	
+			
+			
+		}
+		if($upd){
+		// update invoice
+		$db->updateCol("applicant_count,checks_count","'$applicant_count','$checks_count'",'monthly_invoice',"id=$invoice_id");
+		}
+		
+		
+		$InvoiceBody .= ' 
+		
+		<tr>
+		<td align="center"   >1.</td>
+		<td align="left"  >Total Checks '.$c.' in this month (<a href="'.SITE_URL.'?action=calcinv&atype=view&cid='.$com_id.'" >View details</a>) </td>
+		<td align="center"   >--</td>
+		<td align="center"   >--</td>
+		<td align="center"   >--</td>
+		<td align="center"   >'.$total.'</td>
+		</tr>
+			
+		<tr>
+		<td align="center"   >2.</td>
+		<td align="left"  >Sales Tax ('.$companyTax.'%)</td>
+		<td align="center"   >--</td>
+		<td align="center"   >--</td>
+		<td align="center"   >--</td>
+		<td align="center"   >'.$taxAmount.'</td>
+		</tr>
+		<tr><td align="center"  colspan="6" style="border-bottom:1px solid #999;">&nbsp;</td></tr>
+		<tr>
+		<td align="center"   ></td>
+		<td align="center"  ></td>
+		<td align="center"   ></td>
+		<td align="center"   ></td>
+		<td align="center"   >Grand Total:</td>
+		<td align="center"   >'.$grand_total.'</td>
+		</tr>
+		<tr><td align="center"  colspan="6" style="border-bottom:1px solid #999;">&nbsp;</td></tr>
+		
+		
+		
+		<tr>
+		<td align="center"  colspan="2" ></td>
+		<td align="center"  colspan="2" >DECLARATION<br />
+ Payment Instructions: Name of Beneficiary:- Background Check (Pvt.) Ltd.<br />
+ Beneficiary Account No.08517900292703: (PKR) IBAN #: PKHABB0008577900292703<br />
+ Name and Address of the Beneficiary Bank: Habib Bank Limited, PNSC Karachi. Pakistan<br />
+ Swift Code: HABBPKKA<br /> </td>
+ <td align="center"  colspan="2" ></td></tr>
+		<tr><td align="center"  colspan="6" style="border-bottom:1px solid #999;">&nbsp;</td></tr>
+		</table>';
+		
+		
+		
+		
+		$bodyText .= '
+			
+		<tr>
+		<td align="center"   >'.($c+1).'</td>
+		<td align="left"  >Sales Tax ('.$companyTax.'%) </td>
+		<td align="center"   >--</td>
+		<td align="center"   >--</td>
+		<td align="center"   >--</td>
+		<td align="center"   >'.$taxAmount.'</td>
+		</tr>
+		
+		<tr>
+		<td align="center"   >Total Checks:</td>
+		<td align="center"  >'.$checks_count.'</td>
+		<td align="center"   >Total Applicants:</td>
+		<td align="center"   >'.$applicant_count.'</td>
+		<td align="center"   >Grand Total:</td>
+		<td align="center"   >'.$grand_total.'</td>
+		</tr>
+		
+		<tr><td align="center"  colspan="6" style="border-bottom:1px solid #999;">&nbsp;</td></tr>
+		<tr><td align="center"  colspan="6" >DECLARATION
+		Payment Instructions: Name of Beneficiary:- Background Check (Pvt.) Ltd.
+		Beneficiary Account No.08517900292703: (PKR) IBAN #: PKHABB0008577900292703
+		Name and Address of the Beneficiary Bank: Habib Bank Limited, PNSC Karachi. Pakistan
+		Swift Code: HABBPKKA </td></tr>
+		<tr><td align="center"  colspan="6" style="border-bottom:1px solid #999;">&nbsp;</td></tr>
+		
+		</table>';
+		
+		
+		echo $bodyText;
+		
+		if((!isset($_REQUEST['cid'])) && $invoice_number!="" ){
+			
+		$db->updateCol("credits","'$monthly_credits_allowed'",'company',"id=$com_id");	
+		
+		$db->updateCol("sent,sent_date","1,CURRENT_TIMESTAMP",'monthly_invoice',"invoice_number='$invoice_number'");	
+		
+		
+		$emailSubject = "New Invoice submitted from ".PORTAL;
+		
+		
+							$clUsers = getClUser($com_id);
+
+							if($clUsers){
+
+								while($clUser = mysql_fetch_assoc($clUsers)){
+									$fullName = $clUser['first_name'].' '.$clUser['last_name'];
+									//$toEamil = $clUser['email'];
+									$toEamil = "khalique@xcluesiv.com";
+									$cc = "rafiq@xcluesiv.com";
+									
+									
+									
+									
+									
+									emailTmp($InvoiceBody,$emailSubject,$toEamil,'',$cc,'','',$fullName);
+
+								}
+
+							}
+		}
+
+						
+		
+
+	}
+
+
+	function getCheckTitle($checks_id){
+		global $db;
+		$checks = @mysql_fetch_assoc($db->select("checks","checks_title","checks_id=$checks_id"));
+		
+		return $checks[checks_title];
+		
+	}
+	
+	function getCompanyTax($com_id){
+		global $db;
+		
+		$selCom = getcompany($com_id);
+		$rsCom = @mysql_fetch_assoc($selCom);
+		$country_id = $rsCom['location'];
+		$Com_tax = getTax(0,$country_id);
+			
+	return $Com_tax;
+		
+	}
+	
+	
+	
+	
+
+
+
+?>

@@ -1,0 +1,128 @@
+.navbar-brand>img {
+    margin-top: -10px;
+    height: 39px;
+}
+.client_login_footer {
+    width: 100%;
+    left: 0;
+    /* background-color: rgba(0, 0, 0, 0.6); */
+    padding: 12px 0px;
+}
+.client_login_footer .container {
+    width: 100%;
+}
+.client_login_footer ul.links {
+    float: left;
+    width: 80%;
+	padding:0;
+}
+.client_login_footer ul li {
+    padding: 0;
+    display: inline-block;
+    list-style: none;
+    font-size: 13px;
+    color: #888e96;
+    text-shadow: 0 1px #fff;
+}
+.client_login_footer ul.links li {
+    margin: 0 11px 0 0;
+    color: #888e96;
+}
+.client_login_footer ul li a {
+    font-size: 13px;
+    color: #888e96;
+    text-shadow: 0 1px #fff;
+}
+.client_login_footer ul.scail {
+    text-align: right;
+}
+.client_login_footer ul.scail li {
+    margin: 0 0 0 20px;
+	float:right;
+}
+.navbar-xs .navbar-nav>li>a i{font-size:15px;}
+.count_boxes h3{cursor:pointer;}
+.count_boxes .panel-body{cursor:pointer;}
+.navbar-sort{padding-right:0;}
+.navbar-sort .select2-container{width: 99% !important; border-radius: 0;}
+.navbar-sort .select2-choice{background-color: #666;height: 42px;padding: 11px 12px;border: none;border-radius: 0; color:#fff !important;}
+.navbar-sort .col-md-4 {padding: 0;}
+.live_nofound{background:url(../images/live_notfound.png) no-repeat; min-height:387px;padding-top: 37%;}
+.ChatActionText{display:none !important;}
+#open_ticket_response{color:#333;}
+.bg-blue-c{background-color:#466baf;border-color: #466baf;color: #fff;}
+.bgc-lightgray{background-color:#646d7d; border-color:#646d7d; color:#fff;}
+.bgc-red{background-color:#ce4e4a; border-color:#ce4e4a; color:#fff;}
+a.bgc-red:hover{color:#eee}
+.bgc-success{background-color:#4CAF50; border-color:#4CAF50; color:#fff;}
+button.bgc-success:hover, a.bgc-success:hover{background-color:#76a017; border-color:#76a017; color:#fff;}
+.bgc-darkgray{background-color:#565656; border-color:#565656; color:#fff;}
+.count_boxes i{font-size:25px;}
+.count_boxes .progress{height: 8px;margin-top: 10px;background-color: rgb(255, 255, 255);}
+.count_boxes .progress .progress-bar{background-color: #9bc53d; line-height:10px}
+.panel .main-search input[type=text] {background-color: #d8d8d9;color: #000;}
+.search_dash .panel-body{padding-bottom: 10px;}
+.insuficent_box h6 i{font-size: 26px;}
+.insuficent_box .text-muted{color: #fff;font-size: 42px;line-height: 52px;}
+.insuficent_box .panel-body{padding-top: 28px;padding-bottom: 28px;}
+.search_dash .content-group{margin:0px 0 8px 0 !important;}
+.case_activity .media-body{text-transform: lowercase;}
+.bloging li a{padding-top: 15px;padding-bottom: 15px;}
+.bloging li h4 span{text-transform: uppercase;font-size: 9px;font-weight: bold;line-height: 8px;}
+.custom-navigation{text-align:right;}
+.custom-navigation i{font-size:25px;}
+.custom-navigation a{color:#333;}
+.custom-navigation .custom-controls-container{display:none;}
+.navbar-header{background: #000;}
+.search_dash .select{width:100px !important;}
+.search_dash .select a.select2-choice{border:none;background: #e6e6e6;}
+
+/*ticker style*/
+.news_feed{height:30px; background:#fff;}
+.newsfeed_label{float: left; font-size: 16px;padding: 3px 10px;color: #fff;background: #e74c3c;}
+#ticker01{float: left;}
+.tickercontainer .mask {width: 99% !important;}
+.tickercontainer { /* the outer div with the black border */
+/*border: 1px solid #000;*/
+background: #fff; 
+/*//max-width: 538px; */
+height: 27px; 
+margin: 0; 
+padding: 0;
+overflow: hidden; 
+}
+.tickercontainer .mask { /* that serves as a mask. so you get a sort of padding both left and right */
+position: relative;
+left: 10px;
+top: 6px;
+width: 518px;
+overflow: hidden;
+}
+ul.newsticker { /* that's your list */
+position: relative;
+left: 550px;
+list-style-type: none;
+margin: 0;
+padding: 0;
+
+}
+ul.newsticker li {
+float: left; /* important: display inline gives incorrect results when you check for elem's width */
+margin: 0;
+padding: 0;
+background: #fff;
+}
+ul.newsticker a {
+white-space: nowrap;
+padding: 0;
+color:#333;
+font-size:14px;
+margin: 0 5px 0 0;
+font-weight:700;
+} 
+ul.newsticker span {
+margin: 0 10px 0 10px;
+} 
+
+
+

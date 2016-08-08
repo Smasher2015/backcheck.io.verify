@@ -1,0 +1,6 @@
+.savvion-employment-box1 h5 span, .savvion-employment-box2 h5 span, .savvion-employment-box3 h5 span{padding: 9px 12px;}
+.savvion-employment-box1 h5 span:after, .savvion-employment-box2 h5 span:after, .savvion-employment-box3 h5 span:after{display:none !important;}
+.addsavvioncheck-section2 a.crm-remarks-btn:after, .addsavvioncheck-section3 a.verification-stu-btn:after, .addsavvioncheck-section4 a.add_field_button:after{display:none !important;}
+.addsavvioncheck-section-btn{text-align: right;}
+.addsavvioncheck-section-btn button{float: inherit !important;}
+.verification-stu .col-xs-6{width:50%;}

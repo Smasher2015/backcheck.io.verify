@@ -1,0 +1,102 @@
+.login-bg
+{
+	background: url(../images/login_src_bg.jpg) no-repeat;
+  	position: fixed;
+  	height: 100%;
+  	width: 100%;
+	background-size:cover;
+}
+.login-page .wrapper {
+  left: 0;
+  padding: 0;
+  height: 100%;
+}
+.login-page .wrapper .panel {
+  position: relative;
+  width: 400px;
+  top: 20%;
+  -webkit-box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.05), 0 4px 4px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.05), 0 4px 4px -3px rgba(0, 0, 0, 0.1);
+  float: right;
+  margin-right: 5%;
+}
+.login-page .wrapper .panel-heading,
+.login-page .wrapper .list-group-item,
+.login-page .wrapper .panel-footer {
+  text-align: center;
+}
+.login-page .wrapper .panel-heading {
+  padding: 22px 15px;
+}
+.login-page .wrapper .panel-heading > div {
+  display: inline-block;
+  margin: 0 auto;
+}
+.login-page .wrapper .panel-heading > div img {
+  position: relative;
+  display: block;
+  float: left;
+  top: 5px;
+  /*width: 49px;*/
+  height: 44px;
+  margin: 0;
+  margin-right: 5px;
+}
+.login-page .wrapper .panel-heading > div h1 {
+  margin: 0;
+  display: block;
+  float: left;
+}
+.login-page .wrapper .panel-heading > div h1 span {
+  display: block;
+  color: #333333;
+}
+.login-page .wrapper .panel-heading > div h1 .title {
+  font-size: 39px;
+  line-height: 39px;
+  font-weight: bold;
+  letter-spacing: -1px;
+}
+.login-page .wrapper .panel-heading > div h1 .subtitle {
+  font-size: 13px;
+  line-height: 13px;
+}
+.login-page .wrapper .list-group-item {
+  padding: 23px 15px;
+  color: #555555;
+}
+.login-page .wrapper .welcome-text {
+  display: block;
+  font-size: 18px;
+}
+.login-page .wrapper .member {
+  display: inline-block;
+  margin-right: 7px;
+}
+.login-page .wrapper .login-text {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+.login-page .wrapper .form-group {
+  margin: 0 auto 10px;
+}
+.login-page .wrapper .form-group label {
+  display: none;
+}
+.login-page .wrapper .form-group input {
+  width: 262px;
+  margin: 0 auto;
+}
+.login-page .wrapper .panel-footer .btn {
+  margin-top: 10px;
+  width: 260px;
+}
+.login-page .wrapper .panel-footer .forgot {
+  display: inline-block;
+  margin: 15px auto 5px;
+}
+.client_login_header
+{
+	position: relative;
+	z-index: 1;
+}

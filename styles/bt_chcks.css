@@ -1,0 +1,18 @@
+body{background-color:transparent;;}
+.unickon_rof row{
+	display: block;
+    border: none;
+    outline: none;
+    min-height: 2853px !important;
+    margin: 31px 0;	
+}
+.alert_boxes2 .popupBox{width: 50% !important;}
+.alert_boxes2 .popupBox div.popupBox{width: 100% !important;}
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{font-size: 13px;padding: 5px 7px;}
+.labelside_check fieldset {width: 50%;float: left;padding: 5px 10px !important;}
+.button_bar {float: right;margin: 0;}
+.button_bar button {margin: 5px;}
+.button_bar button[name="subProblem"]{margin-top: 41px;}
+.report-sec, .report-sec-bulk, .manager-report-sec{padding: 0;}
+table.static input{border: 1px solid #ccc;width: 191px;height: 30px;margin: 7px 4px 0 0;padding-left: 5px;border-radius: 3px;}
